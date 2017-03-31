@@ -1,6 +1,6 @@
 <?php
 /*
-This example shows how to create a 
+This example shows how to create a batch of linkfire campaigns
 */
 
 
