@@ -5,7 +5,7 @@ require_once("HttpRequest.php");
 class Auth {
     private $_baseUrl = 'https://auth.linkfire.com/identity';
 
-    public function getToken(string $clientId, string $clientSecret) {
+    public function getToken(string $clientId, string $clientSecret) : string {
         try {
             $url = $this->_baseUrl . '/connect/token';
             $data = "grant_type=client_credentials&client_id=$clientId&client_secret=$clientSecret&scope=public.api";

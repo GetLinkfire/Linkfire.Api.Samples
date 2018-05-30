@@ -10,7 +10,7 @@ class Api {
     private $token;
 
     // Sets the bearer token
-    public function setToken($token) {
+    public function setToken(string $token) {
         $this->token = $token;
     }
 

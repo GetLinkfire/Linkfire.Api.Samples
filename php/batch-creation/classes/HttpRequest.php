@@ -2,7 +2,7 @@
 namespace Linkfire;
 
 class HttpRequest {
-    public function post(string $url, string $postContent, ?string $token, string $contentType): string {
+    public function post(string $url, string $postContent, ?string $token, string $contentType) : string {
         $headers = [
             'Content-Type: '.$contentType,
         ];
@@ -31,7 +31,7 @@ class HttpRequest {
         return $result;
     }
 
-    public function get(string $url, string $token) {
+    public function get(string $url, string $token) : string {
         $headers = [
             'Authorization: Bearer '.$token,
         ];
@@ -56,7 +56,7 @@ class HttpRequest {
         return $result;
     }
 
-    private function ParseHttpCode($httpCode) {
+    private function ParseHttpCode(int $httpCode) : string {
         if ($httpCode >= 200 && $httpCode <= 299) {
             return "Success";
         }
@@ -66,5 +66,6 @@ class HttpRequest {
         if ($httpCode >= 500 && $httpCode <= 599) {
             return "ServerError";
         }
+        return "InvalidStatusCode";
     }
 }
