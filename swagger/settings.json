@@ -1,0 +1,326 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Settings v1.0",
+      "version": "1.0"
+    },
+    "host": "api.linkfire.com",
+    "basePath": "/settings",
+    "schemes": [
+      "https"
+    ],
+    "securityDefinitions": {
+      "oauth2implicit flow": {
+        "type": "oauth2",
+        "scopes": {
+          "public.api": ""
+        },
+        "flow": "implicit",
+        "authorizationUrl": "https://auth.linkfire.com/identity/connect/authorize"
+      }
+    },
+    "security": [
+      {
+        "oauth2implicit flow": [
+          "public.api"
+        ]
+      }
+    ],
+    "paths": {
+      "/boards/{boardId}/domains": {
+        "get": {
+          "description": "Get board domains",
+          "operationId": "boards_getboarddomains",
+          "summary": "Boards_GetBoardDomains",
+          "parameters": [
+            {
+              "name": "boardId",
+              "in": "path",
+              "description": "Format - uuid. Board identifier",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "Api-Version",
+              "in": "header",
+              "description": "API version to use",
+              "type": "string",
+              "default": "v1.0"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/MultipleResponse[BoardDomain]"
+              }
+            }
+          },
+          "produces": [
+            "application/json",
+            "text/json"
+          ]
+        }
+      },
+      "/boards": {
+        "get": {
+          "description": "Get boards",
+          "operationId": "boards_getboards",
+          "summary": "Boards_GetBoards",
+          "parameters": [
+            {
+              "name": "Api-Version",
+              "in": "header",
+              "description": "API version to use",
+              "type": "string",
+              "default": "v1.0"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/MultipleResponse[BoardResponse]"
+              }
+            }
+          },
+          "produces": [
+            "application/json",
+            "text/json"
+          ]
+        }
+      },
+      "/boards/{boardId}/mediaservices": {
+        "get": {
+          "description": "Get board media services",
+          "operationId": "boards_getboardmediaservices",
+          "summary": "Boards_GetBoardMediaServices",
+          "parameters": [
+            {
+              "name": "boardId",
+              "in": "path",
+              "description": "Format - uuid. Board identifier",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Format - int32. Page number to get. Default is 0 (first page)",
+              "type": "integer"
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "description": "Format - int32. Number of media services to get per page. Max 1000",
+              "type": "integer"
+            },
+            {
+              "name": "Api-Version",
+              "in": "header",
+              "description": "API version to use",
+              "type": "string",
+              "default": "v1.0"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/PaginationResponse[MediaServiceResponse]"
+              }
+            }
+          },
+          "produces": [
+            "application/json",
+            "text/json"
+          ]
+        }
+      },
+      "/mediaservices": {
+        "get": {
+          "description": "Get available media services",
+          "operationId": "mediaservices_getmediaservices",
+          "summary": "MediaServices_GetMediaServices",
+          "parameters": [
+            {
+              "name": "description",
+              "in": "query",
+              "description": "Only get media services that contains this description",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "in": "query",
+              "description": "Only get media services that contains this name",
+              "type": "string"
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Format - int32. Page number to get. Default is 0 (first page)",
+              "type": "integer"
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "description": "Format - int32. Number of media services to get per page. Max 1000",
+              "type": "integer"
+            },
+            {
+              "name": "Api-Version",
+              "in": "header",
+              "description": "API version to use",
+              "type": "string",
+              "default": "v1.0"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/PaginationResponse[MediaServiceResponse]"
+              }
+            }
+          },
+          "produces": [
+            "application/json",
+            "text/json"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "MultipleResponse[BoardDomain]": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BoardDomain"
+            }
+          },
+          "transactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "BoardDomain": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isFavorite": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MultipleResponse[BoardResponse]": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BoardResponse"
+            }
+          },
+          "transactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "BoardResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "parentId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "name": {
+            "type": "string"
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "format": "uuid",
+              "type": "string",
+              "example": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PaginationResponse[MediaServiceResponse]": {
+        "type": "object",
+        "properties": {
+          "totalItemsCount": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/MediaServiceResponse"
+            }
+          },
+          "transactionId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+      },
+      "MediaServiceResponse": {
+        "description": "Media Service Response Model",
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "description": "Id",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "buttonType": {
+            "description": "Button Type",
+            "enum": [
+              "Download",
+              "GoTo",
+              "Play",
+              "Tickets"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Name",
+            "type": "string"
+          },
+          "description": {
+            "description": "Description",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }

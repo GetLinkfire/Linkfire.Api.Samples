@@ -1,0 +1,5243 @@
+
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Insights v1.0",
+    "version": "1.0"
+  },
+  "host": "api.linkfire.com",
+  "basePath": "/insights",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "oauth2implicit flow": {
+      "type": "oauth2",
+      "scopes": {
+        "public.api": ""
+      },
+      "flow": "implicit",
+      "authorizationUrl": "https://auth.linkfire.com/identity/connect/authorize"
+    }
+  },
+  "security": [
+    {
+      "oauth2implicit flow": [
+        "public.api"
+      ]
+    }
+  ],
+  "paths": {
+    "/boards/{boardId}": {
+      "get": {
+        "description": "Get funnel insight",
+        "operationId": "boardinsights_getboardinsights",
+        "summary": "BoardInsights_GetBoardInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[BoardSummaryMetricsResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sliced": {
+      "get": {
+        "description": "Get funnel insight in time intervals",
+        "operationId": "boardinsights_getboardgranularinsightsresponse",
+        "summary": "BoardInsights_GetBoardGranularInsightsResponse",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "interval to segment result by",
+            "type": "string",
+            "enum": [
+              "All",
+              "FifteenMinute",
+              "Hour",
+              "Day",
+              "Week",
+              "Month"
+            ]
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[GranularBoardMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links": {
+      "get": {
+        "description": "Get  top campaign links insight",
+        "operationId": "boardinsights_getlinksinsight",
+        "summary": "BoardInsights_GetLinksInsight",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: Engagements, Sessions, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[LinkMetricsResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/countries": {
+      "get": {
+        "description": "Get countries insight",
+        "operationId": "boardinsights_getboardcountryinsights",
+        "summary": "BoardInsights_GetBoardCountryInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CountryMetricArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/cities": {
+      "get": {
+        "description": "Get cities insight",
+        "operationId": "boardinsights_getboardcitiesinsights",
+        "summary": "BoardInsights_GetBoardCitiesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CityMetricResponseArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/devices": {
+      "get": {
+        "description": "Get devices insight",
+        "operationId": "boardinsights_getboarddevicesinsights",
+        "summary": "BoardInsights_GetBoardDevicesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[DeviceMetricModel]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/channels": {
+      "get": {
+        "description": "Get channels insight",
+        "operationId": "boardinsights_getboardchannelsinsights",
+        "summary": "BoardInsights_GetBoardChannelsInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ChannelMetricResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/activities": {
+      "get": {
+        "description": "Get activities insight",
+        "operationId": "boardinsights_getboardactivitiesinsights",
+        "summary": "BoardInsights_GetBoardActivitiesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ActivityMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/assets": {
+      "get": {
+        "description": "Get assets insight",
+        "operationId": "boardinsights_getboardassetsinsights",
+        "summary": "BoardInsights_GetBoardAssetsInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[AssetsMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/services": {
+      "get": {
+        "description": "Get media services insight",
+        "operationId": "boardinsights_getboardservicesinsights",
+        "summary": "BoardInsights_GetBoardServicesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "serviceType",
+            "in": "query",
+            "description": "Only get results for this media service type",
+            "type": "string",
+            "enum": [
+              "Download",
+              "Physical",
+              "Streaming"
+            ]
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[MediaServiceMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/referrers": {
+      "get": {
+        "description": "Get referrers insight",
+        "operationId": "boardinsights_getlinkreferrerinsights",
+        "summary": "BoardInsights_GetLinkReferrerInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ReferrerMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sales/tokens": {
+      "get": {
+        "description": "Get sales tokens insight",
+        "operationId": "boardinsights_getboardsalestokensinsights",
+        "summary": "BoardInsights_GetBoardSalesTokensInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ItemsSold, Earnings, Commission",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[SalesTokenMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sales/products/summary": {
+      "get": {
+        "description": "Get product type insight",
+        "operationId": "boardinsights_getboardproducttypesinsights",
+        "summary": "BoardInsights_GetBoardProductTypesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[ProductTypeMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sales": {
+      "get": {
+        "description": "Get sales insight",
+        "operationId": "boardinsights_getboardsalesinsights",
+        "summary": "BoardInsights_GetBoardSalesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[SalesMetricResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sales/stores": {
+      "get": {
+        "description": "Get stores insight",
+        "operationId": "boardinsights_getboardsalesstoresinsights",
+        "summary": "BoardInsights_GetBoardSalesStoresInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hasCommission",
+            "in": "query",
+            "description": "Only include results that have commission",
+            "type": "boolean"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ItemsSold",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[StoreMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sales/products": {
+      "get": {
+        "description": "Get products insight",
+        "operationId": "boardinsights_getboardsalesproductsinsights",
+        "summary": "BoardInsights_GetBoardSalesProductsInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ItemsSold, Earnings",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of insights to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ProductMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/sales/summary/sliced": {
+      "get": {
+        "description": "Get sales insight in time intervals",
+        "operationId": "boardinsights_getboardsalesslicedinsights",
+        "summary": "BoardInsights_GetBoardSalesSlicedInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "interval to segment results by",
+            "type": "string",
+            "enum": [
+              "All",
+              "FifteenMinute",
+              "Hour",
+              "Day",
+              "Week",
+              "Month"
+            ]
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[GranularSalesMetricResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/uniqueVisitors": {
+      "get": {
+        "description": "Get unique visitors",
+        "operationId": "boardinsights_getboarduniquevisitors",
+        "summary": "BoardInsights_GetBoardUniqueVisitors",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights starting from this date (yyyy-mm-dd)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get insights that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get insights that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get insights that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get insights that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get insights that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get insights that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get insights that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get insights until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[BoardUniqueVisitorsMetricsResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}": {
+      "get": {
+        "description": "Get funnel insight",
+        "operationId": "linkinsights_getlinkinsight",
+        "summary": "LinkInsights_GetLinkInsight",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[LinkSummaryMetricsResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sliced": {
+      "get": {
+        "description": "Get funnel insight in time intervals",
+        "operationId": "linkinsights_getlinkgranularinsightsresponse",
+        "summary": "LinkInsights_GetLinkGranularInsightsResponse",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "interval to segment results by",
+            "type": "string",
+            "enum": [
+              "All",
+              "FifteenMinute",
+              "Hour",
+              "Day",
+              "Week",
+              "Month"
+            ]
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[GranularLinkMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/countries": {
+      "get": {
+        "description": "Get countries insight",
+        "operationId": "linkinsights_getlinkcountryinsights",
+        "summary": "LinkInsights_GetLinkCountryInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CountryMetricArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/cities": {
+      "get": {
+        "description": "Get cities insight",
+        "operationId": "linkinsights_getlinkcitiesinsights",
+        "summary": "LinkInsights_GetLinkCitiesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CityMetricResponseArray"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/devices": {
+      "get": {
+        "description": "Get devices insight",
+        "operationId": "linkinsights_getlinkdevicesinsights",
+        "summary": "LinkInsights_GetLinkDevicesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[DeviceMetricModel]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/channels": {
+      "get": {
+        "description": "Get channels insight",
+        "operationId": "linkinsights_getlinkchannelsinsights",
+        "summary": "LinkInsights_GetLinkChannelsInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ChannelMetricResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/activities": {
+      "get": {
+        "description": "Get activities insight",
+        "operationId": "linkinsights_getlinkactivitiesinsights",
+        "summary": "LinkInsights_GetLinkActivitiesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ActivityMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/assets": {
+      "get": {
+        "description": "Get assets insight",
+        "operationId": "linkinsights_getlinkassetsinsights",
+        "summary": "LinkInsights_GetLinkAssetsInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[AssetsMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/services": {
+      "get": {
+        "description": "Get media services insight",
+        "operationId": "linkinsights_getlinkservicesinsights",
+        "summary": "LinkInsights_GetLinkServicesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "serviceType",
+            "in": "query",
+            "description": "Only get results for this media service type",
+            "type": "string",
+            "enum": [
+              "Download",
+              "Physical",
+              "Streaming"
+            ]
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[MediaServiceMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/referrers": {
+      "get": {
+        "description": "Get referrers insight",
+        "operationId": "linkinsights_getlinkreferrerinsights",
+        "summary": "LinkInsights_GetLinkReferrerInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ClickThroughs, Visits",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ReferrerMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sales/tokens": {
+      "get": {
+        "description": "Get sales tokens insight",
+        "operationId": "linkinsights_getlinksalestokensinsights",
+        "summary": "LinkInsights_GetLinkSalesTokensInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ItemsSold, Earnings, Commission",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[SalesTokenMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sales/products/summary": {
+      "get": {
+        "description": "Get product type insight",
+        "operationId": "linkinsights_getlinkproducttypesinsights",
+        "summary": "LinkInsights_GetLinkProductTypesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[ProductTypeMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sales": {
+      "get": {
+        "description": "Get sales insight",
+        "operationId": "linkinsights_getboardsalesinsights",
+        "summary": "LinkInsights_GetBoardSalesInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[SalesMetricResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sales/summary/sliced": {
+      "get": {
+        "description": "Get sales insight in time intervals",
+        "operationId": "linkinsights_getlinksalesslicedinsights",
+        "summary": "LinkInsights_GetLinkSalesSlicedInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "interval to segment results by",
+            "type": "string",
+            "enum": [
+              "All",
+              "FifteenMinute",
+              "Hour",
+              "Day",
+              "Week",
+              "Month"
+            ]
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[GranularSalesMetricResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sales/stores": {
+      "get": {
+        "description": "Get stores insight",
+        "operationId": "linkinsights_getlinksalesstoresinsights",
+        "summary": "LinkInsights_GetLinkSalesStoresInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ItemsSold",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[StoreMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/sales/products": {
+      "get": {
+        "description": "Get products insight",
+        "operationId": "linkinsights_getlinksalesproductsinsights",
+        "summary": "LinkInsights_GetLinkSalesProductsInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: ItemsSold, Earnings",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of results to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ProductMetricResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/uniqueVisitors": {
+      "get": {
+        "description": "Get unique visitors",
+        "operationId": "linkinsights_getlinkuniquevisitors",
+        "summary": "LinkInsights_GetLinkUniqueVisitors",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results starting from this date (yyyy-mm-dd)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelIds",
+            "in": "query",
+            "description": "Only get results that include these channel Ids. Prefix with \"-\" to exclude channel Id instead. It is possible to specify multiple channel Ids",
+            "type": "string"
+          },
+          {
+            "name": "activities",
+            "in": "query",
+            "description": "Only get results that include these activities. Prefix with \"-\" to exclude activity instead. It is possible to specify multiple activities",
+            "type": "string"
+          },
+          {
+            "name": "referrers",
+            "in": "query",
+            "description": "Only get results that include these referrers. Prefix with \"-\" to exclude referrer instead. It is possible to specify multiple referrers",
+            "type": "string"
+          },
+          {
+            "name": "isoCodes",
+            "in": "query",
+            "description": "Only get results that include these iso codes. Prefix with \"-\" to exclude iso code instead. It is possible to specify multiple iso codes",
+            "type": "string"
+          },
+          {
+            "name": "MediaServiceNames",
+            "in": "query",
+            "description": "Only get results that include these media services. Prefix with \"-\" to exclude media service instead. It is possible to specify multiple media services",
+            "type": "string"
+          },
+          {
+            "name": "deviceTypes",
+            "in": "query",
+            "description": "Only get results that include these device types. Prefix with \"-\" to exclude device type instead. It is possible to specify multiple device types",
+            "type": "string"
+          },
+          {
+            "name": "osGroups",
+            "in": "query",
+            "description": "Only get results that include these operating systems. Prefix with \"-\" to exclude operating system instead. It is possible to specify multiple operating systems",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get results until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[LinkUniqueVisitorsMetricsResponce]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/reporting/schedules": {
+      "get": {
+        "description": "Get a list of report schedules",
+        "operationId": "reports_getreportschedules",
+        "summary": "Reports_GetReportSchedules",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "query",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of reports to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[ReportScheduleResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/reporting/schedules/{scheduleId}": {
+      "get": {
+        "description": "Get report schedule",
+        "operationId": "reports_getreportschedule",
+        "summary": "Reports_GetReportSchedule",
+        "parameters": [
+          {
+            "name": "scheduleId",
+            "in": "path",
+            "description": "Format - uuid. Schedule identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "boardId",
+            "in": "query",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[ReportScheduleResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/reporting/schedules/{scheduleId}/reports": {
+      "get": {
+        "description": "Get a list of generated reports",
+        "operationId": "reports_getgeneratedreports",
+        "summary": "Reports_GetGeneratedReports",
+        "parameters": [
+          {
+            "name": "scheduleId",
+            "in": "path",
+            "description": "Format - uuid. Schedule identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "boardId",
+            "in": "query",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get reports starting from this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get reports until this date (yyyy-mm-dd)",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of reports to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[GeneratedReportResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/reporting/schedules/{scheduleId}/reports/{reportid}": {
+      "get": {
+        "description": "Get generated report",
+        "operationId": "reports_getrawgeneratedreport",
+        "summary": "Reports_GetRawGeneratedReport",
+        "parameters": [
+          {
+            "name": "scheduleId",
+            "in": "path",
+            "description": "Format - uuid. Schedule identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reportid",
+            "in": "path",
+            "description": "Format - uuid. Report identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Format. Supports csv, json and xml",
+            "type": "string",
+            "enum": [
+              "Csv",
+              "Json",
+              "Xml"
+            ]
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReportingSchedules{scheduleId}Reports{reportid}Get200ApplicationJsonResponse"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json"
+        ]
+      }
+    },
+    "/reporting/raw": {
+      "get": {
+        "description": "Get raw report for a board",
+        "operationId": "reports_getboardrawinsights",
+        "summary": "Reports_GetBoardRawInsights",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "query",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get reports starting from this date (yyyy-mm-dd)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get reports until this date (yyyy-mm-dd)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "columns",
+            "in": "query",
+            "description": "Columns to include. if not defined, returns all",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of report",
+            "type": "string",
+            "enum": [
+              "Click",
+              "Pageview",
+              "Conversion",
+              "Event"
+            ]
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[RawInsights]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "text/csv"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SingleResponse[BoardSummaryMetricsResponce]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/BoardSummaryMetricsResponce"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "BoardSummaryMetricsResponce": {
+      "description": "Board insight summary responce",
+      "type": "object",
+      "properties": {
+        "boardId": {
+          "format": "uuid",
+          "description": "Unique identifier of board",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "sessions": {
+          "format": "int32",
+          "description": "Number of sessions on landing page, or directly routed",
+          "type": "integer"
+        },
+        "engagements": {
+          "format": "int32",
+          "description": "Number of engagements, contains preview and services",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Sales in design mockup",
+          "type": "integer"
+        },
+        "clicks": {
+          "format": "int32",
+          "description": "Number of clicks (pre-landing page)",
+          "type": "integer"
+        }
+      }
+    },
+    "MultipleResponse[GranularBoardMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GranularBoardMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "GranularBoardMetricResponse": {
+      "description": "Granular board insight response",
+      "type": "object",
+      "properties": {
+        "boardId": {
+          "format": "uuid",
+          "description": "Unique identifier of board",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "engagements": {
+          "format": "int32",
+          "description": "Number of engagements, contains preview and services",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "description": "Timestamp of the slice",
+          "type": "string"
+        }
+      }
+    },
+    "PaginationResponse[LinkMetricsResponce]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkMetricsResponce"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkMetricsResponce": {
+      "description": "Link insight responce",
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "format": "uuid",
+          "description": "Link id",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "sessions": {
+          "format": "int32",
+          "description": "Number of sessions on landing page, or directly routed",
+          "type": "integer"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "engagements": {
+          "format": "int32",
+          "description": "Number of engagements, contains preview and services",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        }
+      }
+    },
+    "CountryMetric": {
+      "type": "object",
+      "properties": {
+        "isoCode": {
+          "type": "string"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "type": "number"
+        },
+        "visits": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "CityMetricResponse": {
+      "description": "Metrics grouped by cities",
+      "type": "object",
+      "properties": {
+        "city": {
+          "description": "City name",
+          "type": "string"
+        },
+        "iso": {
+          "description": "Country alpha-2 code",
+          "type": "string"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Earnings",
+          "type": "number"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        }
+      }
+    },
+    "SingleResponse[DeviceMetricModel]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/DeviceMetricModel"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "DeviceMetricModel": {
+      "description": "Contains two arrays of metrics [Platforms] and [Operating Systems]",
+      "type": "object",
+      "properties": {
+        "platforms": {
+          "description": "Platforms",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlatformMetric"
+          }
+        },
+        "operatingSystems": {
+          "description": "Operating Systems",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperatingSystemMetric"
+          }
+        }
+      }
+    },
+    "PlatformMetric": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "visits": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "OperatingSystemMetric": {
+      "type": "object",
+      "properties": {
+        "operatingSystem": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "visits": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PaginationResponse[ChannelMetricResponce]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChannelMetricResponce"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ChannelMetricResponce": {
+      "description": "Channel mertics responce",
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "format": "uuid",
+          "description": "Channel id",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Earnings",
+          "type": "number"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        }
+      }
+    },
+    "PaginationResponse[ActivityMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ActivityMetricResponse": {
+      "type": "object",
+      "properties": {
+        "visits": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activity": {
+          "type": "string"
+        },
+        "channelId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "PaginationResponse[AssetsMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssetsMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "AssetsMetricResponse": {
+      "type": "object",
+      "properties": {
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        },
+        "assetType": {
+          "description": "Asset Type",
+          "type": "string"
+        }
+      }
+    },
+    "PaginationResponse[MediaServiceMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaServiceMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "MediaServiceMetricResponse": {
+      "description": "Metrics grouped by media services",
+      "type": "object",
+      "properties": {
+        "service": {
+          "description": "Service",
+          "type": "string"
+        },
+        "serviceTitle": {
+          "description": "Media service title",
+          "type": "string"
+        },
+        "serviceType": {
+          "description": "Media service Type",
+          "type": "string"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        }
+      }
+    },
+    "PaginationResponse[ReferrerMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferrerMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ReferrerMetricResponse": {
+      "type": "object",
+      "properties": {
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        },
+        "referrerName": {
+          "description": "NAme of referrer",
+          "type": "string"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Total earnings",
+          "type": "number"
+        }
+      }
+    },
+    "PaginationResponse[SalesTokenMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SalesTokenMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "SalesTokenMetricResponse": {
+      "description": "Metrics grouped by sales token",
+      "type": "object",
+      "properties": {
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Total earnings",
+          "type": "number"
+        },
+        "commission": {
+          "format": "double",
+          "description": "Total commission",
+          "type": "number"
+        },
+        "tokenCode": {
+          "description": "Sales token code",
+          "type": "string"
+        },
+        "programName": {
+          "description": "Affiliate program name",
+          "type": "string"
+        }
+      }
+    },
+    "MultipleResponse[ProductTypeMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductTypeMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ProductTypeMetricResponse": {
+      "description": "Product type mertics response",
+      "type": "object",
+      "properties": {
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Earnings",
+          "type": "number"
+        },
+        "productType": {
+          "description": "Product Type",
+          "type": "string"
+        }
+      }
+    },
+    "SingleResponse[SalesMetricResponce]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SalesMetricResponce"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "SalesMetricResponce": {
+      "description": "Sales responce",
+      "type": "object",
+      "properties": {
+        "itemsSold": {
+          "format": "int32",
+          "description": "Total items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Total earnings",
+          "type": "number"
+        }
+      }
+    },
+    "PaginationResponse[StoreMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StoreMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "StoreMetricResponse": {
+      "description": "Metrics grouped by store",
+      "type": "object",
+      "properties": {
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "storeName": {
+          "description": "Store Name",
+          "type": "string"
+        },
+        "countryCode": {
+          "description": "Country Code",
+          "type": "string"
+        }
+      }
+    },
+    "PaginationResponse[ProductMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ProductMetricResponse": {
+      "description": "Metrics grouped by product",
+      "type": "object",
+      "properties": {
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Earnings",
+          "type": "number"
+        },
+        "productName": {
+          "description": "Product Name",
+          "type": "string"
+        },
+        "productType": {
+          "description": "Product Type",
+          "type": "string"
+        },
+        "storeName": {
+          "description": "Store Name",
+          "type": "string"
+        }
+      }
+    },
+    "MultipleResponse[GranularSalesMetricResponce]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GranularSalesMetricResponce"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "GranularSalesMetricResponce": {
+      "description": "Sales sliced responce",
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "format": "date-time",
+          "description": "Granularity bucket timestamp",
+          "type": "string"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Total items sold",
+          "type": "integer"
+        },
+        "earnings": {
+          "format": "double",
+          "description": "Total earnings",
+          "type": "number"
+        }
+      }
+    },
+    "SingleResponse[BoardUniqueVisitorsMetricsResponce]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/BoardUniqueVisitorsMetricsResponce"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "BoardUniqueVisitorsMetricsResponce": {
+      "description": "Board insight summary responce",
+      "type": "object",
+      "properties": {
+        "boardId": {
+          "format": "uuid",
+          "description": "Unique identifier of board",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "uniqueVisitors": {
+          "format": "int32",
+          "description": "The amount of individual visitors",
+          "type": "integer"
+        }
+      }
+    },
+    "SingleResponse[LinkSummaryMetricsResponce]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/LinkSummaryMetricsResponce"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkSummaryMetricsResponce": {
+      "description": "Link insight summary responce",
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "format": "uuid",
+          "description": "Unique identifier of link",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "sessions": {
+          "format": "int32",
+          "description": "Number of sessions on landing page, or directly routed",
+          "type": "integer"
+        },
+        "engagements": {
+          "format": "int32",
+          "description": "Number of engagements, contains preview and services",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Sales in design mockup",
+          "type": "integer"
+        },
+        "clicks": {
+          "format": "int32",
+          "description": "Number of clicks (pre-landing page)",
+          "type": "integer"
+        }
+      }
+    },
+    "MultipleResponse[GranularLinkMetricResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GranularLinkMetricResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "GranularLinkMetricResponse": {
+      "description": "Granular link insight response",
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "format": "uuid",
+          "description": "Unique identifier of link",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "visits": {
+          "format": "int32",
+          "description": "Number of visitors on landing page, or directly routed",
+          "type": "integer"
+        },
+        "engagements": {
+          "format": "int32",
+          "description": "Number of engagements, contains preview and services",
+          "type": "integer"
+        },
+        "clickThroughs": {
+          "format": "int32",
+          "description": "Number of clicks to services",
+          "type": "integer"
+        },
+        "itemsSold": {
+          "format": "int32",
+          "description": "Number of items sold",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "description": "Timestamp of the slice",
+          "type": "string"
+        }
+      }
+    },
+    "SingleResponse[LinkUniqueVisitorsMetricsResponce]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/LinkUniqueVisitorsMetricsResponce"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkUniqueVisitorsMetricsResponce": {
+      "description": "Link insight summary responce",
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "format": "uuid",
+          "description": "Unique identifier of link",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "uniqueVisitors": {
+          "format": "int32",
+          "description": "The amount of individual visitors",
+          "type": "integer"
+        }
+      }
+    },
+    "PaginationResponse[ReportScheduleResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReportScheduleResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ReportScheduleResponse": {
+      "description": "Generated report",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interval": {
+          "enum": [
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Yearly"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "Click",
+            "Pageview",
+            "Conversion",
+            "Event"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "SingleResponse[ReportScheduleResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ReportScheduleResponse"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "PaginationResponse[GeneratedReportResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeneratedReportResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "GeneratedReportResponse": {
+      "description": "Generated report",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "webhookData": {
+          "$ref": "#/definitions/ReportWebhookDataResponse"
+        }
+      }
+    },
+    "ReportWebhookDataResponse": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interval": {
+          "enum": [
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Yearly"
+          ],
+          "type": "string"
+        },
+        "urls": {
+          "$ref": "#/definitions/ReportWebhookDataUrlsResponse"
+        }
+      }
+    },
+    "ReportWebhookDataUrlsResponse": {
+      "type": "object",
+      "properties": {
+        "csv": {
+          "type": "string"
+        },
+        "json": {
+          "type": "string"
+        },
+        "xml": {
+          "type": "string"
+        }
+      }
+    },
+    "MultipleResponse[RawInsights]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RawInsights"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "RawInsights": {
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "boardId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "activity": {
+          "type": "string"
+        },
+        "asset": {
+          "type": "string"
+        },
+        "browser": {
+          "type": "string"
+        },
+        "channelId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "channelType": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "convCategory": {
+          "type": "string"
+        },
+        "convDescription": {
+          "type": "string"
+        },
+        "convId": {
+          "type": "string"
+        },
+        "convIdSecond": {
+          "type": "string"
+        },
+        "convName": {
+          "type": "string"
+        },
+        "convReference": {
+          "type": "string"
+        },
+        "convSource": {
+          "type": "string"
+        },
+        "convToken": {
+          "type": "string"
+        },
+        "convType": {
+          "type": "string"
+        },
+        "convValue": {
+          "format": "float",
+          "type": "number"
+        },
+        "convValueSecond": {
+          "format": "float",
+          "type": "number"
+        },
+        "convValueType": {
+          "type": "string"
+        },
+        "convValueUnit": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "device": {
+          "type": "string"
+        },
+        "eventAction": {
+          "type": "string"
+        },
+        "eventCategory": {
+          "type": "string"
+        },
+        "eventCategoryType": {
+          "type": "string"
+        },
+        "eventLabel": {
+          "type": "string"
+        },
+        "eventValue": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "os": {
+          "type": "string"
+        },
+        "params": {
+          "type": "string"
+        },
+        "referrer": {
+          "type": "string"
+        },
+        "topLevelReferrer": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "userAgent": {
+          "type": "string"
+        },
+        "visitorToken": {
+          "type": "string"
+        },
+        "visitorUid": {
+          "type": "string"
+        }
+      }
+    },
+    "CountryMetricArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CountryMetric"
+      }
+    },
+    "CityMetricResponseArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CityMetricResponse"
+      }
+    },
+    "ReportingSchedules{scheduleId}Reports{reportid}Get200ApplicationJsonResponse": {
+      "type": "object"
+    },
+    "ReportingSchedules{scheduleId}Reports{reportid}Get200TextJsonResponse": {
+      "type": "object"
+    }
+  }
+}

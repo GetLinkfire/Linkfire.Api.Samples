@@ -1,0 +1,2139 @@
+
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Campaigns v1.0",
+    "version": "1.0",
+    "description": "Contains endpoints for creating and getting information about Linkfire links"
+  },
+  "host": "api.linkfire.com",
+  "basePath": "/campaigns",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "oauth2implicit flow": {
+      "type": "oauth2",
+      "scopes": {
+        "public.api": ""
+      },
+      "flow": "implicit",
+      "authorizationUrl": "https://auth.linkfire.com/identity/connect/authorize"
+    }
+  },
+  "security": [
+    {
+      "oauth2implicit flow": [
+        "public.api"
+      ]
+    }
+  ],
+  "paths": {
+    "/boards/{boardId}/batches": {
+      "get": {
+        "description": "Get batch identifiers",
+        "operationId": "batch_get",
+        "summary": "Batch_Get",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[BatchResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/batches/{batchId}/scan/status": {
+      "get": {
+        "description": "Get batch scanning status",
+        "operationId": "batch_getbatchscanningstatus",
+        "summary": "Batch_GetBatchScanningStatus",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "batchId",
+            "in": "path",
+            "description": "Format - uuid. Batch identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MultipleResponse[LinkAndScanStatusResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links": {
+      "get": {
+        "description": "Get campaign links",
+        "operationId": "link_getlinks",
+        "summary": "Link_GetLinks",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "artistId",
+            "in": "query",
+            "description": "Format - uuid. Only get campaign links with this artist",
+            "type": "string"
+          },
+          {
+            "name": "creatorId",
+            "in": "query",
+            "description": "Format - uuid. Only get campaign links created by this user",
+            "type": "string"
+          },
+          {
+            "name": "domainId",
+            "in": "query",
+            "description": "Format - uuid. Only get campaign links with this domain",
+            "type": "string"
+          },
+          {
+            "name": "batchId",
+            "in": "query",
+            "description": "Format - uuid. Only get campaign links that are part of this batch",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Only get campaign links that contains this in title",
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Only get campaign links with this short code",
+            "type": "string"
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "description": "Only get campaign links with this tag",
+            "type": "string"
+          },
+          {
+            "name": "createdDate",
+            "in": "query",
+            "description": "Format - date-time (as date-time in RFC3339). Only get campaign links created on this date",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort results ascending by field. Prefix with \"-\" to sort descending. It is possible to sort on these fields: Title, Updated",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Format - int32. Page number to get. Default is 0 (first page)",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Format - int32. Number of campaign to get per page. Max 1000",
+            "type": "integer"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaginationResponse[LinkResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      },
+      "post": {
+        "description": "Create campaign link",
+        "operationId": "link_createlink",
+        "summary": "Link_CreateLink",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          },
+          {
+            "name": "createLinkRequest",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateLinkRequest"
+            },
+            "description": "Metadata in JSON or XML format"
+          }
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded",
+          "text/csv"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[LinkResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/batch": {
+      "post": {
+        "description": "Create multiple campaign links",
+        "operationId": "link_createmultiplelinks",
+        "summary": "Link_CreateMultipleLinks",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          },
+          {
+            "name": "createLinkRequestArray",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateLinkRequestArray"
+            },
+            "description": "Metadata in CSV, JSON or XML format"
+          }
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded",
+          "text/csv"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[BatchIdentifierResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}": {
+      "get": {
+        "description": "Get campaign link",
+        "operationId": "link_getlink",
+        "summary": "Link_GetLink",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[LinkExtendedResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      },
+      "put": {
+        "description": "Update campaign link",
+        "operationId": "link_updatelink",
+        "summary": "Link_UpdateLink",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          },
+          {
+            "name": "updateLinkRequest",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateLinkRequest"
+            },
+            "description": "New metadata for campaign link"
+          }
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded",
+          "text/csv"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[LinkExtendedResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      },
+      "delete": {
+        "description": "Delete campaign link",
+        "operationId": "link_disablelink",
+        "summary": "Link_DisableLink",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Boards{boardId}Links{linkId}Delete200ApplicationJsonResponse"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/restore": {
+      "put": {
+        "description": "Restore campaign link",
+        "operationId": "link_restorelink",
+        "summary": "Link_RestoreLink",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Boards{boardId}Links{linkId}RestorePut200ApplicationJsonResponse"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/scan/status": {
+      "get": {
+        "description": "Get scanning status",
+        "operationId": "link_getscanningstatus",
+        "summary": "Link_GetScanningStatus",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[ScanStatusResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/{linkId}/assets": {
+      "get": {
+        "description": "Get marketing assets",
+        "operationId": "link_getlinkassets",
+        "summary": "Link_GetLinkAssets",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "description": "Format - uuid. Campaign link identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse[LinkAssetsResponse]"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    },
+    "/boards/{boardId}/links/rescan": {
+      "post": {
+        "description": "Rescan campaign link(s)",
+        "operationId": "link_rescanlinks",
+        "summary": "Link_RescanLinks",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "description": "Format - uuid. Board identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Api-Version",
+            "in": "header",
+            "description": "API version to use",
+            "type": "string",
+            "default": "v1.0"
+          },
+          {
+            "name": "linkIds",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LinkIds"
+            },
+            "description": "Campaign link identifier(s)"
+          }
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded",
+          "text/csv"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "text/json",
+          "text/csv"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "MultipleResponse[BatchResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BatchResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "BatchResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "creatorId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "MultipleResponse[LinkAndScanStatusResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkAndScanStatusResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkAndScanStatusResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "linkStatus": {
+          "enum": [
+            "Draft",
+            "Pending",
+            "Published",
+            "NoScanningResults"
+          ],
+          "type": "string"
+        },
+        "totalNumbersOfSteps": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentStepNumber": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentAction": {
+          "type": "string"
+        },
+        "isComplete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CreateLinkRequest": {
+      "description": "Link creation model",
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "description": "User defined identifier",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "artist": {
+          "description": "Primary artist name",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "artistAlternative": {
+          "description": "Secondary artist name",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "album": {
+          "description": "Primary album title",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "albumAlternative": {
+          "description": "Secondary album title",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "track": {
+          "description": "Primary track title",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "trackAlternative": {
+          "description": "Secondary track title",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "distributor": {
+          "description": "Distributor",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "genre": {
+          "description": "Genre",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "duration": {
+          "format": "int32",
+          "description": "Duration",
+          "type": "integer"
+        },
+        "image": {
+          "description": "Image",
+          "type": "string"
+        },
+        "playList": {
+          "description": "Playlist",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "creator": {
+          "description": "Creator",
+          "maxLength": 255,
+          "minLength": 0,
+          "type": "string"
+        },
+        "baseUrl": {
+          "description": "Destination Url",
+          "type": "string"
+        },
+        "upc": {
+          "description": "Release UPC code",
+          "maxLength": 14,
+          "minLength": 0,
+          "type": "string"
+        },
+        "isrc": {
+          "description": "Track ISRC code",
+          "maxLength": 50,
+          "minLength": 0,
+          "type": "string"
+        },
+        "service": {
+          "description": "Media service used to get additional metadata",
+          "maxLength": 128,
+          "minLength": 0,
+          "type": "string"
+        },
+        "isoCode": {
+          "description": "two-letter country code used to get additional metadata",
+          "maxLength": 2,
+          "minLength": 0,
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "Campaign link media type. Defaults to Music if not defined",
+          "enum": [
+            "Legacy",
+            "Music",
+            "Content",
+            "Film",
+            "Ticket"
+          ],
+          "type": "string"
+        },
+        "subMediaType": {
+          "description": "Campaign link sub media type. Value is taken from metadata if not provided. Defaults to Track if metadata search have no results or skipped",
+          "enum": [
+            "Track",
+            "Album",
+            "Playlist",
+            "Artist",
+            "AdvancedPlaylist"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "Campaign link title",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^(?=.*[a-zA-Z0-9])(.*)$",
+          "type": "string"
+        },
+        "code": {
+          "description": "Campaign link short code. Automatically generated if not defined",
+          "maxLength": 100,
+          "minLength": 2,
+          "pattern": "^(?=.*[a-zA-Z0-9])([a-zA-Z0-9-_]+)$",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tags separated by comma",
+          "type": "string"
+        },
+        "domainId": {
+          "format": "uuid",
+          "description": "Domain identifier",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "audio": {
+          "description": "Audio sample URL",
+          "type": "string"
+        },
+        "video": {
+          "description": "Video sample URL",
+          "type": "string"
+        },
+        "skipSearch": {
+          "description": "Skip search",
+          "type": "boolean"
+        },
+        "skipMetadataSearch": {
+          "description": "Skip metadata lookup",
+          "type": "boolean"
+        },
+        "locales": {
+          "description": "Locale customizations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UpdateLinkLocaleRequest"
+          }
+        }
+      }
+    },
+    "UpdateLinkLocaleRequest": {
+      "description": "Link locale update model",
+      "required": [
+        "mediaServices",
+        "isoCode"
+      ],
+      "type": "object",
+      "properties": {
+        "mediaServices": {
+          "description": "Locale media services",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkServiceRequest"
+          }
+        },
+        "imageId": {
+          "format": "uuid",
+          "description": "New locale specific image",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "isoCode": {
+          "description": "Two-letter country code. Use \"all\" for default settings.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Does locale contains customizations?",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "Title to show for locale",
+          "type": "string"
+        },
+        "subTitle": {
+          "description": "Sub Title to show for locale",
+          "type": "string"
+        },
+        "autoRedirect": {
+          "description": "Should users be automatically be directed to services if they have a preferred service cookie?",
+          "type": "boolean"
+        },
+        "sampleBehaviour": {
+          "description": "What sample should be used, if any?",
+          "enum": [
+            "PlayNothing",
+            "PlayMusicSample",
+            "PlayVideoSample"
+          ],
+          "type": "string"
+        },
+        "hideDontKnow": {
+          "description": "Do not show 'Don't know' on landing page",
+          "type": "boolean"
+        },
+        "dontKnowButtonText": {
+          "description": "'Don't know' text for locale",
+          "type": "string"
+        },
+        "enableTracking": {
+          "description": "Should tracking be enabled?",
+          "type": "boolean"
+        }
+      }
+    },
+    "LinkServiceRequest": {
+      "description": "Link media service",
+      "required": [
+        "mediaServiceId"
+      ],
+      "type": "object",
+      "properties": {
+        "mediaServiceId": {
+          "format": "uuid",
+          "description": "Media service identifier",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "buttonText": {
+          "description": "Media service action text",
+          "type": "string"
+        },
+        "sortOrder": {
+          "format": "double",
+          "description": "Media service order on landing page",
+          "type": "number"
+        },
+        "url": {
+          "description": "Destination URL",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Destination URI",
+          "type": "string"
+        },
+        "status": {
+          "description": "Media service status",
+          "enum": [
+            "AutomaticallyApplied",
+            "Approved",
+            "Pending",
+            "Manual",
+            "Inherited",
+            "NoDestination"
+          ],
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Whether the media service is shown on the landing page if status is Approved or AutomaticallyApplied",
+          "type": "boolean"
+        },
+        "inherited": {
+          "description": "Inherited media service",
+          "type": "boolean"
+        },
+        "isLocked": {
+          "description": "Locked for rescan media service",
+          "type": "boolean"
+        }
+      }
+    },
+    "SingleResponse[LinkResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/LinkResponse"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkResponse": {
+      "description": "Response format for links",
+      "required": [
+        "mediaType"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "description": "Linkfire ID of link",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "url": {
+          "description": "Campaign link url",
+          "type": "string"
+        },
+        "code": {
+          "description": "Link code",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "boardId": {
+          "format": "uuid",
+          "description": "Board identifier",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "created": {
+          "format": "date-time",
+          "description": "Created date in UTC",
+          "type": "string"
+        },
+        "updated": {
+          "format": "date-time",
+          "description": "Updated date in UTC",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status",
+          "enum": [
+            "Draft",
+            "Pending",
+            "Published",
+            "NoScanningResults"
+          ],
+          "type": "string"
+        },
+        "isScanning": {
+          "description": "Is the campaign link currently being scanned?",
+          "type": "boolean"
+        },
+        "images": {
+          "description": "Campaign link image URLs",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageResponse"
+          }
+        },
+        "audio": {
+          "description": "Campaign link audio URL",
+          "type": "string"
+        },
+        "video": {
+          "description": "Campaign link video URL",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "User defined identifier",
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "Campaign link media type.",
+          "enum": [
+            "Legacy",
+            "Music",
+            "Content",
+            "Film",
+            "Ticket"
+          ],
+          "type": "string"
+        },
+        "subMediaType": {
+          "description": "Campaign link sub media type.",
+          "enum": [
+            "Track",
+            "Album",
+            "Playlist",
+            "Artist",
+            "AdvancedPlaylist"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "Campaign link title",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^(?=.*[a-zA-Z0-9])(.*)$",
+          "type": "string"
+        },
+        "description": {
+          "description": "Campaign link description",
+          "type": "string"
+        },
+        "baseUrl": {
+          "description": "Destination Url",
+          "type": "string"
+        },
+        "upc": {
+          "description": "Release UPC code",
+          "maxLength": 14,
+          "minLength": 0,
+          "type": "string"
+        },
+        "isrc": {
+          "description": "Track ISRC code",
+          "maxLength": 50,
+          "minLength": 0,
+          "type": "string"
+        }
+      }
+    },
+    "ImageResponse": {
+      "description": "Image",
+      "type": "object",
+      "properties": {
+        "url": {
+          "description": "Image URL",
+          "type": "string"
+        },
+        "width": {
+          "format": "int32",
+          "description": "Width of image",
+          "type": "integer"
+        },
+        "height": {
+          "format": "int32",
+          "description": "Heigth of image",
+          "type": "integer"
+        }
+      }
+    },
+    "PaginationResponse[LinkResponse]": {
+      "type": "object",
+      "properties": {
+        "totalItemsCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkResponse"
+          }
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "SingleResponse[BatchIdentifierResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/BatchIdentifierResponse"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "BatchIdentifierResponse": {
+      "description": "Batch of links info",
+      "type": "object",
+      "properties": {
+        "batchId": {
+          "format": "uuid",
+          "description": "Id of links batch",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "SingleResponse[LinkExtendedResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/LinkExtendedResponse"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkExtendedResponse": {
+      "description": "Response format for link",
+      "required": [
+        "mediaType"
+      ],
+      "type": "object",
+      "properties": {
+        "creatorId": {
+          "format": "uuid",
+          "description": "Creator Id",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "domainId": {
+          "format": "uuid",
+          "description": "Domain Id",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "dominantColor": {
+          "description": "DominantColor",
+          "type": "string"
+        },
+        "enableWidget": {
+          "description": "Shows if widget is enabled for this link",
+          "type": "boolean"
+        },
+        "demo": {
+          "description": "Show landing page with demo template",
+          "type": "string"
+        },
+        "useVideo": {
+          "description": "Shows if video sample should be used",
+          "type": "boolean"
+        },
+        "musicStory": {
+          "description": "Shows if should use Facebook music story",
+          "type": "string"
+        },
+        "useArtistAffiliates": {
+          "description": "Use affiliate codes from artists",
+          "type": "boolean"
+        },
+        "useArtistRetargeting": {
+          "description": "Use retargeting programms from artists",
+          "type": "boolean"
+        },
+        "artists": {
+          "description": "Link artists",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkArtistResponse"
+          }
+        },
+        "locales": {
+          "description": "Locales where link is available",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkLocaleResponse"
+          }
+        },
+        "medialinks": {
+          "description": "Media links",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MediaLinkResponse"
+          }
+        },
+        "channels": {
+          "description": "Links channels",
+          "type": "object",
+          "additionalProperties": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        },
+        "samples": {
+          "description": "Samples",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkSampleResponse"
+          }
+        },
+        "doNotTrack": {
+          "description": "Set to disable tracking on link",
+          "type": "boolean"
+        },
+        "id": {
+          "format": "uuid",
+          "description": "Linkfire ID of link",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "url": {
+          "description": "Campaign link url",
+          "type": "string"
+        },
+        "code": {
+          "description": "Link code",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "boardId": {
+          "format": "uuid",
+          "description": "Board identifier",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "created": {
+          "format": "date-time",
+          "description": "Created date in UTC",
+          "type": "string"
+        },
+        "updated": {
+          "format": "date-time",
+          "description": "Updated date in UTC",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status",
+          "enum": [
+            "Draft",
+            "Pending",
+            "Published",
+            "NoScanningResults"
+          ],
+          "type": "string"
+        },
+        "isScanning": {
+          "description": "Is the campaign link currently being scanned?",
+          "type": "boolean"
+        },
+        "images": {
+          "description": "Campaign link image URLs",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageResponse"
+          }
+        },
+        "audio": {
+          "description": "Campaign link audio URL",
+          "type": "string"
+        },
+        "video": {
+          "description": "Campaign link video URL",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "User defined identifier",
+          "type": "string"
+        },
+        "mediaType": {
+          "description": "Campaign link media type.",
+          "enum": [
+            "Legacy",
+            "Music",
+            "Content",
+            "Film",
+            "Ticket"
+          ],
+          "type": "string"
+        },
+        "subMediaType": {
+          "description": "Campaign link sub media type.",
+          "enum": [
+            "Track",
+            "Album",
+            "Playlist",
+            "Artist",
+            "AdvancedPlaylist"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "Campaign link title",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^(?=.*[a-zA-Z0-9])(.*)$",
+          "type": "string"
+        },
+        "description": {
+          "description": "Campaign link description",
+          "type": "string"
+        },
+        "baseUrl": {
+          "description": "Destination Url",
+          "type": "string"
+        },
+        "upc": {
+          "description": "Release UPC code",
+          "maxLength": 14,
+          "minLength": 0,
+          "type": "string"
+        },
+        "isrc": {
+          "description": "Track ISRC code",
+          "maxLength": 50,
+          "minLength": 0,
+          "type": "string"
+        }
+      }
+    },
+    "LinkArtistResponse": {
+      "description": "Artist",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "description": "Artist ID",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "name": {
+          "description": "Artist name",
+          "type": "string"
+        }
+      }
+    },
+    "LinkLocaleResponse": {
+      "description": "Locale of link",
+      "required": [
+        "isoCode"
+      ],
+      "type": "object",
+      "properties": {
+        "mediaServices": {
+          "description": "Media services available for link",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LinkServiceResponse"
+          }
+        },
+        "retargetings": {
+          "description": "Link retargeting programms",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RetargetingModel"
+          }
+        },
+        "affiliates": {
+          "description": "Link Affiliate programms",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AffiliateModel"
+          }
+        },
+        "widget": {
+          "$ref": "#/definitions/LinkWidgetSettingsResponse",
+          "description": "Link widget settings"
+        },
+        "images": {
+          "description": "Locale specific images",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageResponse"
+          }
+        },
+        "isoCode": {
+          "description": "Two-letter country code. Use \"all\" for default settings.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Does locale contains customizations?",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "Title to show for locale",
+          "type": "string"
+        },
+        "subTitle": {
+          "description": "Sub Title to show for locale",
+          "type": "string"
+        },
+        "autoRedirect": {
+          "description": "Should users be automatically be directed to services if they have a preferred service cookie?",
+          "type": "boolean"
+        },
+        "sampleBehaviour": {
+          "description": "What sample should be used, if any?",
+          "enum": [
+            "PlayNothing",
+            "PlayMusicSample",
+            "PlayVideoSample"
+          ],
+          "type": "string"
+        },
+        "hideDontKnow": {
+          "description": "Do not show 'Don't know' on landing page",
+          "type": "boolean"
+        },
+        "dontKnowButtonText": {
+          "description": "'Don't know' text for locale",
+          "type": "string"
+        },
+        "enableTracking": {
+          "description": "Should tracking be enabled?",
+          "type": "boolean"
+        }
+      }
+    },
+    "MediaLinkResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "type": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "url": {
+          "type": "object"
+        },
+        "cdn": {
+          "type": "string"
+        },
+        "samples": {
+          "type": "string"
+        }
+      }
+    },
+    "LinkSampleResponse": {
+      "type": "object",
+      "properties": {
+        "artist": {
+          "type": "string"
+        },
+        "track": {
+          "type": "string"
+        },
+        "sample": {
+          "$ref": "#/definitions/SampleInfoResponse"
+        },
+        "trackNumber": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "duration": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "LinkServiceResponse": {
+      "description": "Link media service",
+      "required": [
+        "mediaServiceId"
+      ],
+      "type": "object",
+      "properties": {
+        "mediaServiceTitle": {
+          "description": "Media service title",
+          "type": "string"
+        },
+        "mediaServiceName": {
+          "description": "Media service name",
+          "type": "string"
+        },
+        "matchScore": {
+          "format": "double",
+          "description": "The media service match score",
+          "type": "number"
+        },
+        "mediaServiceId": {
+          "format": "uuid",
+          "description": "Media service identifier",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "buttonText": {
+          "description": "Media service action text",
+          "type": "string"
+        },
+        "sortOrder": {
+          "format": "double",
+          "description": "Media service order on landing page",
+          "type": "number"
+        },
+        "url": {
+          "description": "Destination URL",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Destination URI",
+          "type": "string"
+        },
+        "status": {
+          "description": "Media service status",
+          "enum": [
+            "AutomaticallyApplied",
+            "Approved",
+            "Pending",
+            "Manual",
+            "Inherited",
+            "NoDestination"
+          ],
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Whether the media service is shown on the landing page if status is Approved or AutomaticallyApplied",
+          "type": "boolean"
+        },
+        "inherited": {
+          "description": "Inherited media service",
+          "type": "boolean"
+        },
+        "isLocked": {
+          "description": "Locked for rescan media service",
+          "type": "boolean"
+        }
+      }
+    },
+    "RetargetingModel": {
+      "type": "object",
+      "properties": {
+        "serviceName": {
+          "type": "string"
+        },
+        "retargeting": {
+          "type": "string"
+        },
+        "twitterType": {
+          "type": "string"
+        }
+      }
+    },
+    "AffiliateModel": {
+      "type": "object",
+      "properties": {
+        "serviceName": {
+          "type": "string"
+        },
+        "affiliate": {
+          "type": "string"
+        }
+      }
+    },
+    "LinkWidgetSettingsResponse": {
+      "description": "Link widget settings",
+      "type": "object",
+      "properties": {
+        "isPrimary": {
+          "description": "Indicates if widget is primary",
+          "type": "boolean"
+        },
+        "isSecondary": {
+          "description": "Indicates if widget is secondary",
+          "type": "boolean"
+        },
+        "title": {
+          "description": "Widget title",
+          "type": "string"
+        },
+        "description": {
+          "description": "Widget description",
+          "type": "string"
+        },
+        "text": {
+          "description": "Widget text",
+          "type": "string"
+        },
+        "web": {
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of widget",
+          "enum": [
+            "Buy",
+            "Tickets",
+            "Follow",
+            "Share",
+            "Merchandise"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "SampleInfoResponse": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateLinkRequest": {
+      "description": "Model for updating link",
+      "required": [
+        "code",
+        "domainId",
+        "mediaType",
+        "status"
+      ],
+      "type": "object",
+      "properties": {
+        "images": {
+          "description": "Image URL(s), will replace existing images",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "code": {
+          "description": "Campaign link short code.",
+          "maxLength": 100,
+          "minLength": 2,
+          "pattern": "^(?=.*[a-zA-Z0-9])([a-zA-Z0-9-_]+)$",
+          "type": "string"
+        },
+        "domainId": {
+          "format": "uuid",
+          "description": "Domain identifier",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "locales": {
+          "description": "Locale customizations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UpdateLinkLocaleRequest"
+          }
+        },
+        "tags": {
+          "description": "Tags separated by comma",
+          "type": "string"
+        },
+        "doNotTrack": {
+          "description": "Disable tracking on link",
+          "type": "boolean"
+        },
+        "mediaType": {
+          "description": "Campaign link media type.",
+          "enum": [
+            "Legacy",
+            "Music",
+            "Content",
+            "Film",
+            "Ticket"
+          ],
+          "type": "string"
+        },
+        "subMediaType": {
+          "description": "Campaign link sub media type.",
+          "enum": [
+            "Track",
+            "Album",
+            "Playlist",
+            "Artist",
+            "AdvancedPlaylist"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "description": "Campaign link title",
+          "maxLength": 255,
+          "minLength": 1,
+          "pattern": "^(?=.*[a-zA-Z0-9])(.*)$",
+          "type": "string"
+        },
+        "description": {
+          "description": "Campaign link description",
+          "type": "string"
+        },
+        "baseUrl": {
+          "description": "Destination Url",
+          "type": "string"
+        },
+        "upc": {
+          "description": "Release UPC code",
+          "maxLength": 14,
+          "minLength": 0,
+          "type": "string"
+        },
+        "isrc": {
+          "description": "Track ISRC code",
+          "maxLength": 50,
+          "minLength": 0,
+          "type": "string"
+        },
+        "status": {
+          "description": "Campaign link status",
+          "enum": [
+            "Draft",
+            "Pending",
+            "Published",
+            "NoScanningResults"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "SingleResponse[ScanStatusResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ScanStatusResponse"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ScanStatusResponse": {
+      "description": "Model for representing link status and a \r\nscan status that is set if the link is\r\ncurrently scanning or recently completed",
+      "type": "object",
+      "properties": {
+        "linkStatus": {
+          "description": "Overall link status",
+          "enum": [
+            "Draft",
+            "Pending",
+            "Published",
+            "NoScanningResults"
+          ],
+          "type": "string"
+        },
+        "totalNumbersOfSteps": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentStepNumber": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentAction": {
+          "type": "string"
+        },
+        "isComplete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SingleResponse[LinkAssetsResponse]": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/LinkAssetsResponse"
+        },
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "LinkAssetsResponse": {
+      "description": "Link assets",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "description": "Linkfire link id",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "title": {
+          "description": "Title",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description",
+          "type": "string"
+        },
+        "status": {
+          "description": "Link Status (Draft, Pending, Published)",
+          "enum": [
+            "Draft",
+            "Pending",
+            "Published",
+            "NoScanningResults"
+          ],
+          "type": "string"
+        },
+        "linkfireUri": {
+          "description": "URI of linkfire link",
+          "type": "string"
+        },
+        "baseUri": {
+          "description": "Base URI that was provided on link creation",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "ID of link in external system",
+          "type": "string"
+        },
+        "artists": {
+          "description": "Artists",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArtistResponse"
+          }
+        },
+        "album": {
+          "description": "Album title",
+          "type": "string"
+        },
+        "track": {
+          "description": "Track title",
+          "type": "string"
+        },
+        "upcCodes": {
+          "description": "UPC code",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isrcCodes": {
+          "description": "ISRC Code",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artwork": {
+          "description": "Artorks in available dimensions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageResponse"
+          }
+        },
+        "widgets": {
+          "description": "Widgets in available dimensions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WidgetResponse"
+          }
+        },
+        "directToServiceLinks": {
+          "description": "Direct links to DSPs",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DirectToServiceLinkResponse"
+          }
+        },
+        "created": {
+          "format": "date-time",
+          "description": "Creation date",
+          "type": "string"
+        },
+        "channels": {
+          "description": "Channels available on link",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ChannelLinks"
+          }
+        }
+      }
+    },
+    "ArtistResponse": {
+      "description": "Artist",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "description": "Linkfire artist id",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "name": {
+          "description": "Name",
+          "type": "string"
+        },
+        "images": {
+          "description": "Images in available dimensions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageResponse"
+          }
+        }
+      }
+    },
+    "WidgetResponse": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "format": "int32",
+          "description": "Width of widget",
+          "type": "integer"
+        },
+        "height": {
+          "format": "int32",
+          "description": "Heigth of widget",
+          "type": "integer"
+        },
+        "embedCode": {
+          "description": "HTML code to embed widget",
+          "type": "string"
+        }
+      }
+    },
+    "DirectToServiceLinkResponse": {
+      "description": "Direct link to DSP",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "DSP name",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Direct link",
+          "type": "string"
+        },
+        "countryCodes": {
+          "description": "Countries where the link is available",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ChannelLinks": {
+      "type": "object",
+      "properties": {
+        "linkfireUri": {
+          "type": "string"
+        },
+        "diretDirectToServiceLinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DirectToServiceLinkResponse"
+          }
+        },
+        "widgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WidgetResponse"
+          }
+        }
+      }
+    },
+    "BaseResponse": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "$ref": "#/definitions/MetaModel"
+        }
+      }
+    },
+    "MetaModel": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "CreateLinkRequestArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CreateLinkRequest"
+      }
+    },
+    "Boards{boardId}Links{linkId}Delete200ApplicationJsonResponse": {
+      "type": "object"
+    },
+    "Boards{boardId}Links{linkId}Delete200TextJsonResponse": {
+      "type": "object"
+    },
+    "Boards{boardId}Links{linkId}Delete200TextCsvResponse": {
+      "type": "object"
+    },
+    "Boards{boardId}Links{linkId}RestorePut200ApplicationJsonResponse": {
+      "type": "object"
+    },
+    "Boards{boardId}Links{linkId}RestorePut200TextJsonResponse": {
+      "type": "object"
+    },
+    "Boards{boardId}Links{linkId}RestorePut200TextCsvResponse": {
+      "type": "object"
+    },
+    "LinkIds": {
+      "type": "array",
+      "items": {
+        "format": "uuid",
+        "type": "string",
+        "example": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
